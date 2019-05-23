@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="">
+		<label for="StartPlace">Исходное положение:</label>
+		<input id="StartPlace" type="text">
+		<button onclick="stepOfKnight()">Ок</button>
+
+	</form>
+	<script> 
+		//создание шахматного поля, наполненного именами ячеек. Прим. - А1
+		chessField = [];
+		for(var i=0; i<8; i++){
+			chessField[i] = new Array();
+			for(var j=0; j<8; j++){
+				chessField[i][j] = String.fromCharCode(i+65)+(j+1);
+			}
+		}
+
+  	//реализация выбора хода конем
+  	function stepOfKnight(){
+  		axisX = 0;
+  		axisY = 0;
+
+  		//поиск индекса элемента, соответствующего введенному параметру
+  		userInput = document.getElementById("StartPlace").value;
+  		for (var i = 0; i <8; i++) {
+  			if(chessField[i].indexOf(userInput)!=-1){
+  				axisX = i;
+  				axisY = chessField[i].indexOf(userInput);
+  			}
+  		}
+
+  		//формула вариантов хода для коня
+  		listOfsteps = [];  		
+  		//проходка цикла: 2,1,-1,-2
+  		for (var x = 2; x >-3; x--) {
+  			if(x==0){
+  				continue;
+  			}
+  			console.log(x);
+  			y = Math.abs(x)==2? 1 : 2;
+  			for (var i = 0; i < 2; i++) {
+  				try{
+  					if(chessField[axisX+x][axisY+y]){
+  					listOfsteps.push(chessField[axisX+x][axisY+y]);
+  					}
+  				}
+  				catch(e){
+  					continue;
+  				}
+  				y = -y;
+  			}  		
+  		}
+
+  		alert(listOfsteps.join(" "));
+  	}
+  </script>
+</body>
+</html>
